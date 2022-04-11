@@ -4,6 +4,5 @@ class Exercise {
         this.num_reps = num_reps;
         this.name = name;
         this.link = link;
-
     }
 }
