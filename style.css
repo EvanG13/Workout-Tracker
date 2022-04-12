@@ -35,3 +35,26 @@ main {
     width: 50%;
     border: 3px blue dashed;
 }
+
+.exercise-row {
+    border: 1px rebeccapurple solid;
+    margin: 5px;
+    font-size: 12px;
+    background-image: linear-gradient(yellow, green);
+}
+
+#exercise-link {
+    font-size: 25px;
+}
+
+#muscle-group {
+    font-size: 25px;
+}
+
+#num-sets {
+    font-size: 25px;
+}
+
+#num-reps {
+    font-size: 25px;
+}
