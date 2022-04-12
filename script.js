@@ -53,6 +53,30 @@ addButton.addEventListener("click", addExercise);
  * 
  * @returns current date
  */
+
+//utilities
+
+let enlarge = (e ) => {
+    id = e.target.value;
+    let toBeLarge = document.getElementById(id);
+    //enlargen the element
+    toBeLarge.style.height =  "500px";
+    e.target.innerText = "minimize";
+    e.target.removeEventListener("click", enlarge);
+    e.target.addEventListener("click", minify);
+}
+
+let minify = (e ) => {
+    id = e.target.value;
+    let toBeSmall = document.getElementById(id);
+    //enlargen the element
+    toBeSmall.style.height =  "340px";
+    e.target.innerText = "Enlarge";
+    e.target.removeEventListener("click", minify);
+    e.target.addEventListener("click", enlarge);
+}
+
+
 let getDateString = () => {
     let currentDate = new Date();
     let day = currentDate.getDate();
@@ -95,6 +119,7 @@ class ExerciseCircuit{
  * 
  */
 class Exercise {
+    static  serialID = 0;
     constructor(numSets, numReps, name, link, muscleGroup, linkName, workoutTrack ) {
         this.numSets = numSets;
         this.numReps = "number of reps: " + numReps;
@@ -103,6 +128,8 @@ class Exercise {
         this.muscleGroup = muscleGroup;
         this.linkName = linkName;
         this.workoutTrack = workoutTrack;
+        this.exerciseID = "exercise-" + Exercise.serialID;
+        Exercise.serialID++;
     }
     //renders numBoxes # of checkboxes to arg2
     renderCheckboxes = (numBoxes, container) =>{
@@ -128,6 +155,8 @@ class Exercise {
     renderExercise = () => {
         let exerciseRows = document.getElementById("exercise-rows"); //the container that holds all exercises
         let exercise = document.createElement("div");
+        exercise.id = this.exerciseID; //assign static ID
+        console.log(exercise.id);
         exercise.classList.add("exercise-row"); //each exercise has a class of exercise-row
         // setup  exercise Link
         let exerciseLink = document.createElement("a");
@@ -150,6 +179,13 @@ class Exercise {
         //set up checkboxes
         this.renderCheckboxes(parseInt(this.numSets, 10), exercise);
 
+        //setup enlarge button
+        let enlarger = document.createElement("button");
+        enlarger.value = exercise.id;
+        enlarger.classList.add("enlarge-button");
+        enlarger.addEventListener("click", enlarge);
+        enlarger.innerText = "Enlarge";
+        exercise.appendChild(enlarger);
          // setup numReps
          let numReps = document.createElement("p");
          numReps.id="num-reps";

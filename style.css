@@ -4,7 +4,7 @@ h1 {
 }
 
 body{
-    height: 100vh;
+    padding: 0 10px 0 10px;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -15,6 +15,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-bottom: 10px;
 }
 
 
@@ -23,6 +24,14 @@ button{
     width: 100px;
     background-color: rgb(217, 69, 69);
     color: black;
+    border-radius: 10px;
+}
+
+.enlarge-button{
+    display: inline;
+    margin: 10px;
+    height: 30px;
+    width: 90px;
     border-radius: 10px;
 }
 button:hover{
@@ -51,7 +60,7 @@ main {
 }
 
 #workout-list {
-    height: 100%;
+    height: 1000px;
     width: 20%;
     border: 3px red dotted;
     background-color: rgb(169, 165, 147);
@@ -65,6 +74,7 @@ main {
 }
 
 .exercise-row {
+    height: max-content;
     padding: 10px;
     margin: 0px 5px 0px 5px;
     border: 1px rebeccapurple solid;
