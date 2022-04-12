@@ -23,11 +23,13 @@ class ExerciseCircuit{
 
 //one exercise that will be rendered as a row inside the ExerciseCircuit
 class Exercise {
-    constructor(num_sets, num_reps, name, link, muscleGroup, linkName = "link to exercise" ) {
+    constructor(num_sets, num_reps, name, link, muscleGroup, linkName ) {
         this.num_sets = "number of sets: " + num_sets;
         this.num_reps = "number of reps: " + num_reps;
         this.name = name;
         this.link = link;
+        this.muscleGroup = muscleGroup;
+        this.linkName = linkName;
     }
 
     renderExercise = () => {
@@ -38,30 +40,30 @@ class Exercise {
          let exerciseLink = document.createElement("a");
          exerciseLink.id = "exercise-link";
          exerciseLink.href = this.link;
-         exerciseLink.appendChild(document.createTextNode(this.linkName));
+         console.log(this.linkName);
+         exerciseLink.innerText = this.linkName;
          exercise.appendChild(exerciseLink);
 
-       //setup muscle group
+        //setup muscle group
         let muscleGroup = document.createElement("p");
         muscleGroup.id = "muscle-group";
-        muscleGroup.appendChild(document.createTextNode(this.muscleGroup));
+        muscleGroup.innerText = this.muscleGroup;
         exercise.appendChild(muscleGroup);
 
         //setup numSets
         let numSets = document.createElement("p");
         numSets.Id="num-sets";
-        numSets.appendChild(document.createTextNode(this.num_sets));
+        numSets.innerText = this.num_sets;
         exercise.appendChild(numSets);
 
          //setup numReps
          let numReps = document.createElement("p");
          numReps.Id="num-reps";
-         numReps.appendChild(document.createTextNode(this.num_reps));
+         numReps.innerText = this.num_reps;
          exercise.appendChild(numReps);
 
          //append the exercise to the exercise container
-        exerciseRows.appendChild(exercise);
-        
+        exerciseRows.appendChild(exercise); 
     }
 }
 
@@ -69,4 +71,11 @@ class Exercise {
     let firstExerciseRow = new Exercise(5, "8-12", "Skull Crushers",
      "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
       "tricep", "Skull crusher tutorial");
-    let firstExercise = new ExerciseCircuit([firstExerciseRow]);
+    
+    let secondExerciseRow = new Exercise(3, 
+                                    "12",
+                                    "tricep pulldown",
+                                    "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
+                                    "tricep",
+                                    "rope pulldown tutorial");
+    let secondExercise = new ExerciseCircuit([firstExerciseRow, secondExerciseRow]);
