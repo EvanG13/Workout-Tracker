@@ -24,16 +24,16 @@ let createWorkout = (e) => {
  */
 let addExercise = () => {
 
-    let firstExercise = new Exercise(5, "8-12", "Skull Crushers",
+    let firstExercise = new Exercise(120, "8-12", "Skull Crushers",
      "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
-      "tricep", "Skull crusher tutorial");
+      "tricep", "Skull crusher tutorial", "");
     
     let secondExercise = new Exercise(3, 
                                     "12",
                                     "tricep pulldown",
                                     "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
                                     "tricep",
-                                    "rope pulldown tutorial");
+                                    "rope pulldown tutorial", "");
     armDay.addExercise(firstExercise);
     armDay.addExercise(secondExercise);
 }
@@ -82,6 +82,7 @@ class ExerciseCircuit{
          //render each exercise row
          if (Exercise != null) {
             Exercise.renderExercise();
+            this.exerciseList.push(Exercise);
         } 
         else {
             alert("Error, attempted to add null exercise!");
@@ -94,16 +95,26 @@ class ExerciseCircuit{
  * 
  */
 class Exercise {
-    constructor(numSets, numReps, name, link, muscleGroup, linkName ) {
-        this.numSets = "number of sets: ";
-        this.numSets += numSets;
+    constructor(numSets, numReps, name, link, muscleGroup, linkName, workoutTrack ) {
+        this.numSets = numSets;
         this.numReps = "number of reps: " + numReps;
         this.name = name;
         this.link = link;
         this.muscleGroup = muscleGroup;
         this.linkName = linkName;
+        this.workoutTrack = workoutTrack;
     }
-
+    //renders numBoxes # of checkboxes to arg2
+    renderCheckboxes = (numBoxes, container) =>{
+        let checkContainer = document.createElement("div");
+        checkContainer.classList.add("checkbox-list");
+        for (let i=0; i< numBoxes; i++){
+            let currentBox = document.createElement("input");
+            currentBox.type = "checkbox";
+            checkContainer.appendChild(currentBox);
+        }
+        container.appendChild(checkContainer);
+    }
     /**
      * create template user uses to add an exercise to list
      */
@@ -134,8 +145,10 @@ class Exercise {
         // setup numSets
         let numSets = document.createElement("p");
         numSets.id="num-sets";
-        numSets.innerText = this.numSets;
+        numSets.innerText = "Number of Sets: " + this.numSets;
         exercise.appendChild(numSets);
+        //set up checkboxes
+        this.renderCheckboxes(parseInt(this.numSets, 10), exercise);
 
          // setup numReps
          let numReps = document.createElement("p");
