@@ -70,7 +70,7 @@ let minify = (e ) => {
     id = e.target.value;
     let toBeSmall = document.getElementById(id);
     //enlargen the element
-    toBeSmall.style.height =  "340px";
+    toBeSmall.style.height = "340px";
     e.target.innerText = "Enlarge";
     e.target.removeEventListener("click", minify);
     e.target.addEventListener("click", enlarge);
@@ -143,7 +143,7 @@ class Exercise {
         container.appendChild(checkContainer);
     }
     /**
-     * create template user uses to add an exercise to list
+     * create template user fills out in order to add an exercise to list
      */
     renderTemplate = () => {
         
