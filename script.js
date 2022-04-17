@@ -192,6 +192,11 @@ class Exercise {
          numReps.innerText = this.numReps;
          exercise.appendChild(numReps);
 
+        //setup exercise track
+        let track = document.createElement("audio");
+        track.controls = "controls";
+        track.src = this.workoutTrack;
+
         // append the exercise to the exercise container
         exerciseRows.appendChild(exercise); 
     }
