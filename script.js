@@ -33,7 +33,8 @@ let addExercise = () => {
                                     "tricep pulldown",
                                     "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
                                     "tricep",
-                                    "rope pulldown tutorial", "");
+                                    "rope pulldown tutorial",
+                                    "");
     armDay.addExercise(firstExercise);
     armDay.addExercise(secondExercise);
 }
@@ -112,6 +113,14 @@ class ExerciseCircuit{
             alert("Error, attempted to add null exercise!");
         }
     }
+
+    addTemplate(Exercise) {
+        Exercise.renderTemplate();
+    }
+}
+
+class ExerciseTemplate {
+
 }
 
 /**
