@@ -3,8 +3,8 @@
 
 const createButton = document.getElementById("create-workout");
 const addButton = document.getElementById("add-exercise");
-let list = []                                                        /// exercise list  
-let armDay;
+                                                   /// exercise list  
+
 
 /**
  * Creates workout plan template for day
@@ -15,6 +15,12 @@ let createWorkout = (e) => {
     armDay = new ExerciseCircuit("Arm Day");
     
     return true;
+}
+
+ //removes the current circuit from the current Workout div
+ clearWorkout = () =>{
+    //get rid of all rows in the exercise rows div
+    document.getElementById("exercise-rows").innerHTML = "";
 }
 
 /**
@@ -34,8 +40,8 @@ let addExercise = () => {
                                     "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
                                     "tricep",
                                     "rope pulldown tutorial", "");
-    armDay.addExercise(firstExercise);
-    armDay.addExercise(secondExercise);
+    armDay.addNewExercise(firstExercise);
+    armDay.addNewExercise(secondExercise);
 }
 
 /**
@@ -88,21 +94,35 @@ let getDateString = () => {
  *  Class for your exercise circuit
  */
 class ExerciseCircuit{
-    constructor(circuitTitle) {
+
+
+    constructor(circuitTitle, circuitID) {
+        this.circuitID = circuitID;
         this.circuitTitle = circuitTitle;
         this.exerciseList = [];
         this.date = getDateString();
         //render the date
         document.getElementById("date").innerText = this.date;
         document.getElementById("circuit-title").innerText = this.circuitTitle;
+        
     }
+
+     //render all exercises
+     renderAllExercises = () =>{
+
+        for(ex of this.exerciseList){
+            ex.renderExercise();
+        }
+       
+     }
+    
 
     /**
      * Adds exercise onto exercise list
      * 
      * @param {*} Exercise 
      */
-    addExercise(Exercise) {
+    addNewExercise(Exercise) {
          //render each exercise row
          if (Exercise != null) {
             Exercise.renderExercise();
@@ -154,8 +174,11 @@ class Exercise {
      */
     renderExercise = () => {
         let exerciseRows = document.getElementById("exercise-rows"); //the container that holds all exercises
+
+        //set up exercise row
         let exercise = document.createElement("div");
         exercise.id = this.exerciseID; //assign static ID
+        console.log("this exercise ID = " + this.exerciseID);
         console.log(exercise.id);
         exercise.classList.add("exercise-row"); //each exercise has a class of exercise-row
         // setup  exercise Link
@@ -195,10 +218,64 @@ class Exercise {
         //setup exercise track
         let track = document.createElement("audio");
         track.controls = "controls";
-        track.src = this.workoutTrack;
-
+        track.src = this.workoutTrack; //TODO: MAKE THIS FIT INSIDE THE EXERCISE BOX EVEN WHEN ENLARGED.
+        exercise.appendChild(track);
         // append the exercise to the exercise container
         exerciseRows.appendChild(exercise); 
     }
 }
+    //list of exerciseCircuits
+    class CircuitCalendar{
+
+       
+        
+        //takes ExerciseCircuit object array and renders the circuits to the workout-list element
+        constructor(circuitArray){
+            this.circuitList = circuitArray;
+
+
+            //render all workouts to the workout list
+            let workoutList = document.getElementById('workout-list');
+            for(let i=0; i< this.circuitList.length; i++){
+                //create container div
+                let circuitContainer = document.createElement('div');
+                circuitContainer.setAttribute("value", i); // this is index of the corresponding circuit object in this.circuitList
+                circuitContainer.classList.add("workout-list-circuit");
+
+                //for circuit title
+                let circuitTitle = document.createElement("p");
+                circuitTitle.classList.add("workout-list-circuit-title");
+                circuitTitle.innerText = this.circuitList[i].circuitTitle;
+
+                //create date
+                let circuitDate = document.createElement("p");
+                circuitTitle.classList.add("workout-list-circuit-date");
+                circuitDate.innerText = this.circuitList[i].date;
+
+                //add click event handler to container
+                circuitContainer.addEventListener("click", this.switchToCurrent);
+                //add elements to container and then push container onto the DOM
+                circuitContainer.appendChild(circuitTitle);
+                circuitContainer.appendChild(circuitDate);
+                workoutList.appendChild(circuitContainer);
+            }
+        }
+
+         //event handler. When a circuit in the calendar is clicked, it renders the exercise rows to the current workout window.
+         switchToCurrent = (e) =>{
+            clearWorkout();
+           this.exerciseList[e.target.value].renderAllExercises();
+        }
+
+      
+         
+    }
+
+let armDay= new ExerciseCircuit("Arm Day");
+let shoulderDay= new ExerciseCircuit("Shoulder Day");
+let legDay= new ExerciseCircuit("Leg Day");
+let allExercises = [armDay, shoulderDay, legDay];
+
+let calendar = new CircuitCalendar(allExercises);
+
 
