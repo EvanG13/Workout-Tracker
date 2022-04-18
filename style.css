@@ -128,3 +128,26 @@ ul li{
 footer *{
     color: brown;
 }
+
+
+.workout-list-circuit{
+    height: 220px;
+    width: 100%;
+    border: black dotted 3px;
+    border-left: none;
+    background-color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.workout-list-circuit:hover{
+    cursor:pointer;
+    background-color: tomato;
+}
+
+.workout-list-circuit p{
+    font-size: 30px;
+
+}
