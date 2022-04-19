@@ -12,7 +12,6 @@ const addButton = document.getElementById("add-exercise");
  * @param {*} e 
  */
 let createWorkout = (e) => {
-    armDay = new ExerciseCircuit("Arm Day");
     
     return true;
 }
@@ -29,27 +28,8 @@ let createWorkout = (e) => {
  * @param {*} k 
  */
 let addExercise = () => {
-
-    let firstExercise = new Exercise(120, "8-12", "Skull Crushers",
-     "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
-      "tricep", "Skull crusher tutorial", "");
-    
-    let secondExercise = new Exercise(3, 
-                                    "12",
-                                    "tricep pulldown",
-                                    "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
-                                    "tricep",
-                                    "rope pulldown tutorial",
-                                    "");
-    armDay.addExercise(firstExercise);
-    armDay.addExercise(secondExercise);
-}
-
-/**
- * Save, submit and display newly created exercise
- */
-let saveExercise = () => {
-
+    //armDay.addNewExercise(firstExercise);
+    //armDay.addNewExercise(secondExercise);
 }
 
 createButton.addEventListener("click", createWorkout);
@@ -111,8 +91,9 @@ class ExerciseCircuit{
      //render all exercises
      renderAllExercises = () =>{
 
-        for(ex of this.exerciseList){
-            ex.renderExercise();
+        for(let ex of this.exerciseList){
+            if (ex) 
+                ex.renderExercise();
         }
        
      }
@@ -126,7 +107,6 @@ class ExerciseCircuit{
     addNewExercise(Exercise) {
          //render each exercise row
          if (Exercise != null) {
-            Exercise.renderExercise();
             this.exerciseList.push(Exercise);
         } 
         else {
@@ -137,10 +117,6 @@ class ExerciseCircuit{
     addTemplate(Exercise) {
         Exercise.renderTemplate();
     }
-}
-
-class ExerciseTemplate {
-
 }
 
 /**
@@ -171,12 +147,6 @@ class Exercise {
         }
         container.appendChild(checkContainer);
     }
-    /**
-     * create template user fills out in order to add an exercise to list
-     */
-    renderTemplate = () => {
-        
-    }
 
     /**
      * render exercise that the user creates
@@ -187,9 +157,15 @@ class Exercise {
         //set up exercise row
         let exercise = document.createElement("div");
         exercise.id = this.exerciseID; //assign static ID
-        console.log("this exercise ID = " + this.exerciseID);
-        console.log(exercise.id);
         exercise.classList.add("exercise-row"); //each exercise has a class of exercise-row
+
+
+        // setup  exercise name
+        let exerciseName = document.createElement("p");
+        exerciseName.id = "exercise-name";
+        exerciseName.innerText = this.name;
+        exercise.appendChild(exerciseName);
+
         // setup  exercise Link
         let exerciseLink = document.createElement("a");
         exerciseLink.id = "exercise-link";
@@ -236,8 +212,6 @@ class Exercise {
     //list of exerciseCircuits
     class CircuitCalendar{
 
-       
-        
         //takes ExerciseCircuit object array and renders the circuits to the workout-list element
         constructor(circuitArray){
             this.circuitList = circuitArray;
@@ -249,6 +223,7 @@ class Exercise {
                 //create container div
                 let circuitContainer = document.createElement('div');
                 circuitContainer.setAttribute("value", i); // this is index of the corresponding circuit object in this.circuitList
+                console.log(circuitContainer.getAttribute("value"));
                 circuitContainer.classList.add("workout-list-circuit");
 
                 //for circuit title
@@ -271,20 +246,43 @@ class Exercise {
         }
 
          //event handler. When a circuit in the calendar is clicked, it renders the exercise rows to the current workout window.
-         switchToCurrent = (e) =>{
+         switchToCurrent = ({target}) =>{
             clearWorkout();
-           this.exerciseList[e.target.value].renderAllExercises();
+            
+            //console.log(e.target.getAttribute("value"));
+            //console.log(e.target.classList[0]);
+            if (this.circuitList[target.getAttribute("value")]) {
+                this.circuitList[target.getAttribute("value")].renderAllExercises();
+            }
+            else {
+                this.circuitList[target.parentElement.getAttribute("value")].renderAllExercises();
+            }
         }
-
-      
          
     }
 
-let armDay= new ExerciseCircuit("Arm Day");
-let shoulderDay= new ExerciseCircuit("Shoulder Day");
-let legDay= new ExerciseCircuit("Leg Day");
+const armDay= new ExerciseCircuit("Arm Day");
+
+
+let firstExercise = new Exercise(120, "8-12", "Skull Crushers",
+     "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
+      "tricep", "Skull crusher tutorial", "");
+    
+let secondExercise = new Exercise(3, 
+                                    "12",
+                                    "tricep pulldown",
+                                    "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
+                                    "tricep",
+                                    "rope pulldown tutorial",
+                                    "");
+armDay.addNewExercise(firstExercise);
+armDay.addNewExercise(secondExercise);
+const shoulderDay= new ExerciseCircuit("Shoulder Day");
+const legDay= new ExerciseCircuit("Leg Day");
+
+let shoulderPress = new Exercise("4", "12", "Shoulder Press", " ", "shoulder", "tutorial", " ");
+shoulderDay.addNewExercise(shoulderPress);
+
 let allExercises = [armDay, shoulderDay, legDay];
-
 let calendar = new CircuitCalendar(allExercises);
-
 
