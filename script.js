@@ -261,28 +261,210 @@ class Exercise {
          
     }
 
-const armDay= new ExerciseCircuit("Arm Day");
+/** Chest Day and Chest Exercises */
+const chestDay = new ExerciseCircuit("Chest Day");
 
+let flatBenchPress = new Exercise("4",
+                                "3-5",
+                                "Flat Bench Press", 
+                                " ", 
+                                "Chest", 
+                                "tutorial", 
+                                "https://www.bing.com/videos/search?q=daydreamer+flux&&view=detail&mid=C87A95913DC160837651C87A95913DC160837651&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Ddaydreamer%2520flux%26qs%3Dn%26form%3DQBVR%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Ddaydreamer%2520flux%26sc%3D1-15%26sk%3D%26cvid%3D48B8769C7BBB4E6BA1D21A06311F2A86");
 
-let firstExercise = new Exercise(120, "8-12", "Skull Crushers",
-     "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
-      "tricep", "Skull crusher tutorial", "");
+let inclineBenchPress = new Exercise("4",
+                                "10-12",
+                                "Incline Bench Press", 
+                                " ", 
+                                "Upper Chest", 
+                                "tutorial", 
+                                " ");
+
+let dips = new Exercise("4",
+                        "12",
+                        "Dips", 
+                        " ", 
+                        "Lower Chest", 
+                        "tutorial", 
+                        " ");
+
+let chestFly = new Exercise("4",
+                            "12-14",
+                            "Chest Fly", 
+                            " ", 
+                            "Chest Stretch", 
+                            "tutorial", 
+                            " ");
+chestDay.addNewExercise(flatBenchPress);
+chestDay.addNewExercise(inclineBenchPress);
+chestDay.addNewExercise(dips);
+chestDay.addNewExercise(chestFly);
+
+/** Arm Day Workout and Exercises */
+const bicepsAndTricepsDay= new ExerciseCircuit("Arm Day");
+let skullCrusher = new Exercise(4, 
+                                "8-12", 
+                                "Skull Crushers",
+                                "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
+                                "tricep", 
+                                "Skull crusher tutorial", 
+                                " ");
     
-let secondExercise = new Exercise(3, 
+let tricepPulldown = new Exercise(3, 
                                     "12",
                                     "tricep pulldown",
                                     "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
                                     "tricep",
                                     "rope pulldown tutorial",
                                     "");
-armDay.addNewExercise(firstExercise);
-armDay.addNewExercise(secondExercise);
+let cableCurl = new Exercise(4, 
+                                 "12-14",
+                                 "Cable Bicep Curl",
+                                 " ",
+                                 "Bicep",
+                                 "Cable Curl tutorial",
+                                 " ");
+
+let preacherCurl = new Exercise(4, 
+                                 "12-14",
+                                 "Preacher Curl",
+                                 " ",
+                                 "Bicep",
+                                 "Preacher Curl tutorial",
+                                 " ");
+
+bicepsAndTricepsDay.addNewExercise(skullCrusher);
+bicepsAndTricepsDay.addNewExercise(tricepPulldown);
+bicepsAndTricepsDay.addNewExercise(cableCurl);
+bicepsAndTricepsDay.addNewExercise(preacherCurl);
+
+/** Back Day and Back Exercises */
+const backDay = new ExerciseCircuit("Back Day");
+
+let pullups = new Exercise("4",
+                            "10-12",
+                            "Pullups", 
+                            " ", 
+                            "back", 
+                            "tutorial", 
+                            " ");
+
+let deadlift = new Exercise("4",
+                            "3-5",
+                            "Deadlift", 
+                            " ", 
+                            "back", 
+                            "tutorial", 
+                            " ");
+
+let barbellRow = new Exercise("4",
+                            "10",
+                            "Barbell Row",  
+                            " ", 
+                            "Upper Back", 
+                            "tutorial", 
+                            " ");
+let closeGripLatPulldown = new Exercise("4",
+                                        "12",
+                                        "Close Grip Lat Pulldown", 
+                                        " ", 
+                                        "Stretch Lat", 
+                                        "tutorial", 
+                                        " ");
+
+let singleArmcableRow = new Exercise("4",
+                            "12",
+                            "Single Arm Cable Row", 
+                            " ", 
+                            "Lower Lat", 
+                            "tutorial", 
+                            " ");
+backDay.addNewExercise(pullups);
+backDay.addNewExercise(deadlift);
+backDay.addNewExercise(barbellRow);
+backDay.addNewExercise(closeGripLatPulldown);
+backDay.addNewExercise(singleArmcableRow);
+
+/** Shoulder Day Workout and Exercises */
 const shoulderDay= new ExerciseCircuit("Shoulder Day");
+let overheadPress = new Exercise("4",
+                                "5-8",
+                                 "Overhead Press", 
+                                 " ", 
+                                 "shoulder", 
+                                 "tutorial", 
+                                 " ");
+
+let dumbellShoulderPress = new Exercise("4",
+                                "12-14",
+                                 "Dumbell Shoulder Press", 
+                                 " ", 
+                                 "shoulder", 
+                                 "tutorial", 
+                                 " ");
+
+let laterRaises = new Exercise("4",
+                                "12",
+                                 "Lateral Raises", 
+                                 " ", 
+                                 "shoulder", 
+                                 "tutorial", 
+                                 " ");
+
+let readDeltFly = new Exercise("4",
+                                "12",
+                                 "Rear Delt Flys", 
+                                 " ", 
+                                 "rear delts", 
+                                 "tutorial", 
+                                 " ");
+
+
+
+shoulderDay.addNewExercise(overheadPress);
+shoulderDay.addNewExercise(dumbellShoulderPress);
+shoulderDay.addNewExercise(laterRaises);
+shoulderDay.addNewExercise(readDeltFly);
+
+/** Leg Day Workout and Exercises */
 const legDay= new ExerciseCircuit("Leg Day");
 
-let shoulderPress = new Exercise("4", "12", "Shoulder Press", " ", "shoulder", "tutorial", " ");
-shoulderDay.addNewExercise(shoulderPress);
+let legCurl = new Exercise("4",
+                            "12-14",
+                            "Leg Curl", 
+                            " ", 
+                            "hamstrings", 
+                            "tutorial", 
+                            " ");
 
-let allExercises = [armDay, shoulderDay, legDay];
+let legExtensions = new Exercise("4",
+                                "12-14",
+                                "Dumbell Shoulder Press", 
+                                " ", 
+                                "quadriceps", 
+                                "tutorial", 
+                                " ");
+
+let squats = new Exercise("4",
+                            "3-5",
+                            "Squats", 
+                            " ", 
+                            "legs", 
+                            "tutorial", 
+                            " ");
+
+let legPress = new Exercise("4",
+                            "12-14",
+                            "Leg Press", 
+                            " ", 
+                            "legs", 
+                            "tutorial", 
+                            " ");
+legDay.addNewExercise(legCurl);
+legDay.addNewExercise(legExtensions);
+legDay.addNewExercise(squats);
+legDay.addNewExercise(legPress);
+
+let allExercises = [chestDay, bicepsAndTricepsDay, backDay, shoulderDay, legDay];
 let calendar = new CircuitCalendar(allExercises);
 
