@@ -251,6 +251,7 @@ class Exercise {
             
             //console.log(e.target.getAttribute("value"));
             //console.log(e.target.classList[0]);
+            document.getElementById("circuit-title").innerText = this.circuitList[target.getAttribute("value")].circuitTitle;
             if (this.circuitList[target.getAttribute("value")]) {
                 this.circuitList[target.getAttribute("value")].renderAllExercises();
             }
@@ -262,7 +263,7 @@ class Exercise {
     }
 
 /** Chest Day and Chest Exercises */
-const chestDay = new ExerciseCircuit("Chest Day");
+const chestDay = new ExerciseCircuit("Chest Day", 1);
 
 let flatBenchPress = new Exercise("4",
                                 "3-5",
@@ -301,7 +302,7 @@ chestDay.addNewExercise(dips);
 chestDay.addNewExercise(chestFly);
 
 /** Arm Day Workout and Exercises */
-const bicepsAndTricepsDay= new ExerciseCircuit("Arm Day");
+const bicepsAndTricepsDay= new ExerciseCircuit("Arm Day", 2);
 let skullCrusher = new Exercise(4, 
                                 "8-12", 
                                 "Skull Crushers",
