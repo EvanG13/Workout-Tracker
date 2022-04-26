@@ -71,6 +71,44 @@ let getDateString = () => {
     let year = currentDate.getFullYear();
     return (month + "/" + day + "/" + year);
 }
+
+//timer class
+class Timer{
+    totalTime;
+    originalTime;
+    seconds = 0;
+    minutes = 0;
+    interval;
+    constructor(restTime){ 
+        this.totalTime = restTime;
+        this.originalTime = restTime;
+        this.displayer = document.getElementById("exercise-timer");
+    }
+
+    start = () =>{
+        this.interval = setInterval(this.displayTime, 1000);
+    }
+
+    displayTime = () =>{
+        
+        this.minutes = (this.totalTime / 60);
+        this.seconds = (this.totalTime % 60);
+        
+        this.displayer.innerText = (this.minutes + ":" + this.seconds);
+        this.totalTime--;
+        this.isOver(); //handle if the timer reached zero.
+    }
+
+    isOver = () => {
+        if(this.totalTime <= 0){ //if timer reached zero
+            clearInterval(this.interval);
+            this.totalTime = this.originalTime; //reset the time
+        } 
+    }
+
+}
+
+
 /**
  *  Class for your exercise circuit
  */
@@ -125,7 +163,7 @@ class ExerciseCircuit{
  */
 class Exercise {
     static  serialID = 0;
-    constructor(numSets, numReps, name, link, muscleGroup, linkName, workoutTrack ) {
+    constructor(numSets, numReps, name, link, muscleGroup, linkName, workoutTrack, restTime ) {
         this.numSets = numSets;
         this.numReps = "number of reps: " + numReps;
         this.name = name;
@@ -134,16 +172,20 @@ class Exercise {
         this.linkName = linkName;
         this.workoutTrack = workoutTrack;
         this.exerciseID = "exercise-" + Exercise.serialID;
+        this.restTime = restTime;
         Exercise.serialID++;
     }
     //renders numBoxes # of checkboxes to arg2
     renderCheckboxes = (numBoxes, container) =>{
         let checkContainer = document.createElement("div");
         checkContainer.classList.add("checkbox-list");
+        let timer = new Timer(this.restTime);
         for (let i=0; i< numBoxes; i++){
             let currentBox = document.createElement("input");
             currentBox.type = "checkbox";
+            currentBox.addEventListener("click", timer.start);
             checkContainer.appendChild(currentBox);
+            
         }
         container.appendChild(checkContainer);
     }
@@ -160,11 +202,21 @@ class Exercise {
         exercise.classList.add("exercise-row"); //each exercise has a class of exercise-row
 
 
-        // setup  exercise name
+        // setup  exercise name and timer
+        let nameAndTimerContainer = document.createElement("div");
+        nameAndTimerContainer.id = "name-and-timer";
+        //name
         let exerciseName = document.createElement("p");
         exerciseName.id = "exercise-name";
         exerciseName.innerText = this.name;
-        exercise.appendChild(exerciseName);
+        nameAndTimerContainer.appendChild(exerciseName);
+        //timer
+        let exerciseTimer = document.createElement("p");
+        exerciseTimer.id = "exercise-timer";
+        exerciseTimer.innerText = this.restTime;
+        nameAndTimerContainer.appendChild(exerciseTimer);
+
+        exercise.appendChild(nameAndTimerContainer);
 
         // setup  exercise Link
         let exerciseLink = document.createElement("a");
@@ -271,7 +323,8 @@ let flatBenchPress = new Exercise("4",
                                 " ", 
                                 "Chest", 
                                 "tutorial", 
-                                "https://www.bing.com/videos/search?q=daydreamer+flux&&view=detail&mid=C87A95913DC160837651C87A95913DC160837651&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Ddaydreamer%2520flux%26qs%3Dn%26form%3DQBVR%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Ddaydreamer%2520flux%26sc%3D1-15%26sk%3D%26cvid%3D48B8769C7BBB4E6BA1D21A06311F2A86");
+                                "https://www.bing.com/videos/search?q=daydreamer+flux&&view=detail&mid=C87A95913DC160837651C87A95913DC160837651&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Ddaydreamer%2520flux%26qs%3Dn%26form%3DQBVR%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Ddaydreamer%2520flux%26sc%3D1-15%26sk%3D%26cvid%3D48B8769C7BBB4E6BA1D21A06311F2A86",
+                                210);
 
 let inclineBenchPress = new Exercise("4",
                                 "10-12",
@@ -279,7 +332,8 @@ let inclineBenchPress = new Exercise("4",
                                 " ", 
                                 "Upper Chest", 
                                 "tutorial", 
-                                " ");
+                                " ",
+                                210);
 
 let dips = new Exercise("4",
                         "12",
@@ -287,7 +341,8 @@ let dips = new Exercise("4",
                         " ", 
                         "Lower Chest", 
                         "tutorial", 
-                        " ");
+                        " ", 
+                        180);
 
 let chestFly = new Exercise("4",
                             "12-14",
@@ -295,7 +350,8 @@ let chestFly = new Exercise("4",
                             " ", 
                             "Chest Stretch", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            180);
 chestDay.addNewExercise(flatBenchPress);
 chestDay.addNewExercise(inclineBenchPress);
 chestDay.addNewExercise(dips);
@@ -309,7 +365,8 @@ let skullCrusher = new Exercise(4,
                                 "https://www.bing.com/videos/search?q=skull+crusher+exercise&&view=detail&mid=B217EFE5B6B1908BC950B217EFE5B6B1908BC950&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Dskull%2Bcrusher%2Bexercise%26qpvt%3Dskull%2Bcrusher%2Bexercise%26FORM%3DVDRE",
                                 "tricep", 
                                 "Skull crusher tutorial", 
-                                " ");
+                                " ",
+                                120);
     
 let tricepPulldown = new Exercise(3, 
                                     "12",
@@ -317,14 +374,16 @@ let tricepPulldown = new Exercise(3,
                                     "https://www.bing.com/videos/search?q=rope+pulldown&&view=detail&mid=0061B03BECB5783C199E0061B03BECB5783C199E&&FORM=VRDGAR&ru=%2Fvideos%2Fsearch%3Fq%3Drope%2520pulldown%26qs%3Dn%26form%3DQBVDMH%26%3D%2525eManage%2520Your%2520Search%2520History%2525E%26sp%3D-1%26pq%3Drope%2520pulldown%26sc%3D8-13%26sk%3D%26cvid%3D4F401B911C5343DB8DC97707BEA1B904",
                                     "tricep",
                                     "rope pulldown tutorial",
-                                    "");
+                                    "",
+                                    120);
 let cableCurl = new Exercise(4, 
                                  "12-14",
                                  "Cable Bicep Curl",
                                  " ",
                                  "Bicep",
                                  "Cable Curl tutorial",
-                                 " ");
+                                 " ",
+                                 120);
 
 let preacherCurl = new Exercise(4, 
                                  "12-14",
@@ -332,7 +391,8 @@ let preacherCurl = new Exercise(4,
                                  " ",
                                  "Bicep",
                                  "Preacher Curl tutorial",
-                                 " ");
+                                 " ",
+                                 180);
 
 bicepsAndTricepsDay.addNewExercise(skullCrusher);
 bicepsAndTricepsDay.addNewExercise(tricepPulldown);
@@ -348,7 +408,8 @@ let pullups = new Exercise("4",
                             " ", 
                             "back", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            90);
 
 let deadlift = new Exercise("4",
                             "3-5",
@@ -356,7 +417,8 @@ let deadlift = new Exercise("4",
                             " ", 
                             "back", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            120);
 
 let barbellRow = new Exercise("4",
                             "10",
@@ -364,27 +426,30 @@ let barbellRow = new Exercise("4",
                             " ", 
                             "Upper Back", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            120);
 let closeGripLatPulldown = new Exercise("4",
                                         "12",
                                         "Close Grip Lat Pulldown", 
                                         " ", 
                                         "Stretch Lat", 
                                         "tutorial", 
-                                        " ");
+                                        " ",
+                                        120);
 
-let singleArmcableRow = new Exercise("4",
+let singleArmCableRow = new Exercise("4",
                             "12",
                             "Single Arm Cable Row", 
                             " ", 
                             "Lower Lat", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            120);
 backDay.addNewExercise(pullups);
 backDay.addNewExercise(deadlift);
 backDay.addNewExercise(barbellRow);
 backDay.addNewExercise(closeGripLatPulldown);
-backDay.addNewExercise(singleArmcableRow);
+backDay.addNewExercise(singleArmCableRow);
 
 /** Shoulder Day Workout and Exercises */
 const shoulderDay= new ExerciseCircuit("Shoulder Day");
@@ -394,7 +459,8 @@ let overheadPress = new Exercise("4",
                                  " ", 
                                  "shoulder", 
                                  "tutorial", 
-                                 " ");
+                                 " ", 
+                                 120);
 
 let dumbellShoulderPress = new Exercise("4",
                                 "12-14",
@@ -402,7 +468,8 @@ let dumbellShoulderPress = new Exercise("4",
                                  " ", 
                                  "shoulder", 
                                  "tutorial", 
-                                 " ");
+                                 " ", 
+                                 120);
 
 let laterRaises = new Exercise("4",
                                 "12",
@@ -410,7 +477,8 @@ let laterRaises = new Exercise("4",
                                  " ", 
                                  "shoulder", 
                                  "tutorial", 
-                                 " ");
+                                 " ",
+                                 120);
 
 let readDeltFly = new Exercise("4",
                                 "12",
@@ -418,7 +486,8 @@ let readDeltFly = new Exercise("4",
                                  " ", 
                                  "rear delts", 
                                  "tutorial", 
-                                 " ");
+                                 " ",
+                                 90);
 
 
 
@@ -436,7 +505,8 @@ let legCurl = new Exercise("4",
                             " ", 
                             "hamstrings", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            120);
 
 let legExtensions = new Exercise("4",
                                 "12-14",
@@ -444,7 +514,8 @@ let legExtensions = new Exercise("4",
                                 " ", 
                                 "quadriceps", 
                                 "tutorial", 
-                                " ");
+                                " ",
+                                120);
 
 let squats = new Exercise("4",
                             "3-5",
@@ -452,7 +523,8 @@ let squats = new Exercise("4",
                             " ", 
                             "legs", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            120);
 
 let legPress = new Exercise("4",
                             "12-14",
@@ -460,7 +532,8 @@ let legPress = new Exercise("4",
                             " ", 
                             "legs", 
                             "tutorial", 
-                            " ");
+                            " ",
+                            120);
 legDay.addNewExercise(legCurl);
 legDay.addNewExercise(legExtensions);
 legDay.addNewExercise(squats);
