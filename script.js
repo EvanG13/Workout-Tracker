@@ -84,12 +84,14 @@ let getDateString = () => {
     return (month + "/" + day + "/" + year);
 }
 
-// let clickSetCheckBox = (e) => {
-//     id = e.target.value;
-//     let startTimer = document.getElementById(id);
-//     console.log(startTimer);
-//     console.log("hello");
-// }
+let clickSetCheckBox = ({target}) => {
+    console.log(target.value);
+    id = target.value;
+    let startTimer = document.getElementById(id);
+    target.addEventListener('change', (e) => {
+        console.log("hello world");
+    }); 
+}
 
 /**
  *  Creates Countdown timer
@@ -103,7 +105,6 @@ class Timer {
     constructor(restTime) { 
         this.totalTime = restTime;
         this.originalTime = restTime;
-        this.displayer = document.getElementById("exercise-timer");
     }
 
     start = () => {
@@ -112,10 +113,13 @@ class Timer {
 
     displayTime = () => {
         
-        this.minutes = (this.totalTime / 60);
+        this.minutes = Math.floor(this.totalTime / 60);
         this.seconds = (this.totalTime % 60);
         
+        this.displayer = document.getElementById("exercise-timer");
+        
         this.displayer.innerText = (this.minutes + ":" + this.seconds);
+        //console.log(this.displayer);
         this.totalTime--;
         this.isOver(); //handle if the timer reached zero.
     }
@@ -148,12 +152,11 @@ class ExerciseCircuit{
      //render all exercises
      renderAllExercises = () =>{
 
-        for(let ex of this.exerciseList){
+        for(let ex of this.exerciseList) {
             if (ex) 
                 ex.renderExercise();
         } 
      }
-    
 
     /**
      * Adds exercise onto exercise list
@@ -198,7 +201,7 @@ class Exercise {
         let checkContainer = document.createElement("div");
         checkContainer.classList.add("checkbox-list");
         let timer = new Timer(this.restTime);
-        for (let i=0; i< numBoxes; i++){
+        for (let i = 0; i < numBoxes; ++i) {
             let currentBox = document.createElement("input");
             currentBox.type = "checkbox";
             currentBox.addEventListener("click", timer.start);
@@ -231,7 +234,7 @@ class Exercise {
         //timer
         let exerciseTimer = document.createElement("p");
         exerciseTimer.id = "exercise-timer";
-        exerciseTimer.innerText = this.restTime;
+        exerciseTimer.innerText = Math.floor(this.restTime / 60) + " : " + (this.restTime % 60);
         nameAndTimerContainer.appendChild(exerciseTimer);
 
         exercise.appendChild(nameAndTimerContainer);
