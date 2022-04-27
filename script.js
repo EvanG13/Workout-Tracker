@@ -17,7 +17,7 @@ let createWorkout = (e) => {
 }
 
  //removes the current circuit from the current Workout div
- clearWorkout = () =>{
+ clearWorkout = () => {
     //get rid of all rows in the exercise rows div
     document.getElementById("exercise-rows").innerHTML = "";
 }
@@ -43,7 +43,7 @@ addButton.addEventListener("click", addExercise);
 
 //utilities
 
-let enlarge = (e ) => {
+let enlarge = (e) => {
     id = e.target.value;
     let toBeLarge = document.getElementById(id);
     //enlargen the element
@@ -53,7 +53,7 @@ let enlarge = (e ) => {
     e.target.addEventListener("click", minify);
 }
 
-let minify = (e ) => {
+let minify = (e) => {
     id = e.target.value;
     let toBeSmall = document.getElementById(id);
     //enlargen the element
@@ -72,24 +72,31 @@ let getDateString = () => {
     return (month + "/" + day + "/" + year);
 }
 
+// let clickSetCheckBox = (e) => {
+//     id = e.target.value;
+//     let startTimer = document.getElementById(id);
+//     console.log(startTimer);
+//     console.log("hello");
+// }
+
 //timer class
-class Timer{
-    totalTime;
+class Timer {
+    totalTime = 0;
     originalTime;
     seconds = 0;
     minutes = 0;
     interval;
-    constructor(restTime){ 
+    constructor(restTime) { 
         this.totalTime = restTime;
         this.originalTime = restTime;
         this.displayer = document.getElementById("exercise-timer");
     }
 
-    start = () =>{
+    start = () => {
         this.interval = setInterval(this.displayTime, 1000);
     }
 
-    displayTime = () =>{
+    displayTime = () => {
         
         this.minutes = (this.totalTime / 60);
         this.seconds = (this.totalTime % 60);
@@ -100,7 +107,7 @@ class Timer{
     }
 
     isOver = () => {
-        if(this.totalTime <= 0){ //if timer reached zero
+        if (this.totalTime <= 0) { //if timer reached zero
             clearInterval(this.interval);
             this.totalTime = this.originalTime; //reset the time
         } 
@@ -132,8 +139,7 @@ class ExerciseCircuit{
         for(let ex of this.exerciseList){
             if (ex) 
                 ex.renderExercise();
-        }
-       
+        } 
      }
     
 
@@ -275,7 +281,6 @@ class Exercise {
                 //create container div
                 let circuitContainer = document.createElement('div');
                 circuitContainer.setAttribute("value", i); // this is index of the corresponding circuit object in this.circuitList
-                console.log(circuitContainer.getAttribute("value"));
                 circuitContainer.classList.add("workout-list-circuit");
 
                 //for circuit title
@@ -301,14 +306,14 @@ class Exercise {
          switchToCurrent = ({target}) =>{
             clearWorkout();
             
-            //console.log(e.target.getAttribute("value"));
-            //console.log(e.target.classList[0]);
-            document.getElementById("circuit-title").innerText = this.circuitList[target.getAttribute("value")].circuitTitle;
             if (this.circuitList[target.getAttribute("value")]) {
+
                 this.circuitList[target.getAttribute("value")].renderAllExercises();
+                document.getElementById("circuit-title").innerText = this.circuitList[target.getAttribute("value")].circuitTitle;
             }
             else {
                 this.circuitList[target.parentElement.getAttribute("value")].renderAllExercises();
+                document.getElementById("cicuit-title").innerText = this.circuitList[target.parentElement.getAttribute("value")].circuitTitle;
             }
         }
          
