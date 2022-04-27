@@ -3,8 +3,6 @@
 
 const createButton = document.getElementById("create-workout");
 const addButton = document.getElementById("add-exercise");
-                                                   /// exercise list  
-
 
 /**
  * Creates workout plan template for day
@@ -12,7 +10,7 @@ const addButton = document.getElementById("add-exercise");
  * @param {*} e 
  */
 let createWorkout = (e) => {
-    
+    // TODO
     return true;
 }
 
@@ -28,8 +26,7 @@ let createWorkout = (e) => {
  * @param {*} k 
  */
 let addExercise = () => {
-    //armDay.addNewExercise(firstExercise);
-    //armDay.addNewExercise(secondExercise);
+    // TODO 
 }
 
 createButton.addEventListener("click", createWorkout);
@@ -43,27 +40,42 @@ addButton.addEventListener("click", addExercise);
 
 //utilities
 
-let enlarge = (e) => {
-    id = e.target.value;
+/**
+ * TODO
+ * 
+ * @param {*} param0 
+ */
+let enlarge = ({target}) => {
+    id = target.value;
     let toBeLarge = document.getElementById(id);
     //enlargen the element
     toBeLarge.style.height =  "500px";
-    e.target.innerText = "minimize";
-    e.target.removeEventListener("click", enlarge);
-    e.target.addEventListener("click", minify);
+    target.innerText = "minimize";
+    target.removeEventListener("click", enlarge);
+    target.addEventListener("click", minify);
 }
 
-let minify = (e) => {
-    id = e.target.value;
+/**
+ * TODO 
+ * 
+ * @param {*} param0 
+ */
+let minify = ({target}) => {
+    id = target.value;
     let toBeSmall = document.getElementById(id);
     //enlargen the element
     toBeSmall.style.height = "340px";
-    e.target.innerText = "Enlarge";
-    e.target.removeEventListener("click", minify);
-    e.target.addEventListener("click", enlarge);
+    target.innerText = "Enlarge";
+    target.removeEventListener("click", minify);
+    target.addEventListener("click", enlarge);
 }
 
 
+/**
+ * Gets the current date in format mm/dd/yyyy
+ * 
+ * @returns mm/dd/yyyy 
+ */
 let getDateString = () => {
     let currentDate = new Date();
     let day = currentDate.getDate();
@@ -79,7 +91,9 @@ let getDateString = () => {
 //     console.log("hello");
 // }
 
-//timer class
+/**
+ *  Creates Countdown timer
+ */
 class Timer {
     totalTime = 0;
     originalTime;
@@ -115,12 +129,10 @@ class Timer {
 
 }
 
-
 /**
  *  Class for your exercise circuit
  */
 class ExerciseCircuit{
-
 
     constructor(circuitTitle, circuitID) {
         this.circuitID = circuitID;
@@ -168,7 +180,7 @@ class ExerciseCircuit{
  * 
  */
 class Exercise {
-    static  serialID = 0;
+    static serialID = 0;
     constructor(numSets, numReps, name, link, muscleGroup, linkName, workoutTrack, restTime ) {
         this.numSets = numSets;
         this.numReps = "number of reps: " + numReps;
@@ -182,7 +194,7 @@ class Exercise {
         Exercise.serialID++;
     }
     //renders numBoxes # of checkboxes to arg2
-    renderCheckboxes = (numBoxes, container) =>{
+    renderCheckboxes = (numBoxes, container) => {
         let checkContainer = document.createElement("div");
         checkContainer.classList.add("checkbox-list");
         let timer = new Timer(this.restTime);
@@ -267,17 +279,17 @@ class Exercise {
         exerciseRows.appendChild(exercise); 
     }
 }
-    //list of exerciseCircuits
-    class CircuitCalendar{
 
-        //takes ExerciseCircuit object array and renders the circuits to the workout-list element
-        constructor(circuitArray){
-            this.circuitList = circuitArray;
+//list of exerciseCircuits
+class CircuitCalendar {
 
+    //takes ExerciseCircuit object array and renders the circuits to the workout-list element
+    constructor(circuitArray) {
+        this.circuitList = circuitArray;
 
-            //render all workouts to the workout list
-            let workoutList = document.getElementById('workout-list');
-            for(let i=0; i< this.circuitList.length; i++){
+        //render all workouts to the workout list
+        let workoutList = document.getElementById('workout-list');
+            for (let i=0; i < this.circuitList.length; ++i) {
                 //create container div
                 let circuitContainer = document.createElement('div');
                 circuitContainer.setAttribute("value", i); // this is index of the corresponding circuit object in this.circuitList
@@ -302,26 +314,22 @@ class Exercise {
             }
         }
 
-         //event handler. When a circuit in the calendar is clicked, it renders the exercise rows to the current workout window.
-         switchToCurrent = ({target}) =>{
-            clearWorkout();
-            
-            if (this.circuitList[target.getAttribute("value")]) {
-
-                this.circuitList[target.getAttribute("value")].renderAllExercises();
-                document.getElementById("circuit-title").innerText = this.circuitList[target.getAttribute("value")].circuitTitle;
-            }
-            else {
-                this.circuitList[target.parentElement.getAttribute("value")].renderAllExercises();
-                document.getElementById("cicuit-title").innerText = this.circuitList[target.parentElement.getAttribute("value")].circuitTitle;
-            }
+        //event handler. When a circuit in the calendar is clicked, it renders the exercise rows to the current workout window.
+        switchToCurrent = ({target}) => {
+        clearWorkout();
+        if (this.circuitList[target.getAttribute("value")]) {
+            this.circuitList[target.getAttribute("value")].renderAllExercises();
+            document.getElementById("circuit-title").innerText = this.circuitList[target.getAttribute("value")].circuitTitle;
         }
-         
+        else {
+            this.circuitList[target.parentElement.getAttribute("value")].renderAllExercises();
+            document.getElementById("circuit-title").innerText = this.circuitList[target.parentElement.getAttribute("value")].circuitTitle;
+        }
     }
+}
 
 /** Chest Day and Chest Exercises */
 const chestDay = new ExerciseCircuit("Chest Day", 1);
-
 let flatBenchPress = new Exercise("4",
                                 "3-5",
                                 "Flat Bench Press", 
@@ -406,7 +414,6 @@ bicepsAndTricepsDay.addNewExercise(preacherCurl);
 
 /** Back Day and Back Exercises */
 const backDay = new ExerciseCircuit("Back Day");
-
 let pullups = new Exercise("4",
                             "10-12",
                             "Pullups", 
