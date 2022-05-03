@@ -17,7 +17,9 @@ let createWorkout = (e) => {
  //removes the current circuit from the current Workout div
  clearWorkout = () => {
     //get rid of all rows in the exercise rows div
+
     document.getElementById("exercise-rows").innerHTML = "";
+
 }
 
 /**
@@ -102,35 +104,44 @@ class Timer {
     seconds = 0;
     minutes = 0;
     interval;
-    constructor(restTime) { 
+    constructor(restTime, domId) { //dom id is the id of the p tag that displays the time 
         this.totalTime = restTime;
         this.originalTime = restTime;
+        this.domId = domId;
     }
 
     start = () => {
+        this.totalTime = this.originalTime; //reset the time
+        if(!this.interval){
         this.interval = setInterval(this.displayTime, 1000);
+        }
+        //TODO disable the checkboxes
     }
 
     displayTime = () => {
-        
+        this.isOver(); //handle if the timer reached zero.
         this.minutes = Math.floor(this.totalTime / 60);
         this.seconds = (this.totalTime % 60);
         
-        this.displayer = document.getElementById("exercise-timer");
-        
+        this.displayer = document.getElementById(this.domId);
+       
+        if(this.displayer!= null){
         this.displayer.innerText = (this.minutes + ":" + this.seconds);
+        }
         //console.log(this.displayer);
         this.totalTime--;
-        this.isOver(); //handle if the timer reached zero.
+        
     }
 
     isOver = () => {
-        if (this.totalTime <= 0) { //if timer reached zero
+        if (this.totalTime < 0) { //if timer reached zero
             clearInterval(this.interval);
-            this.totalTime = this.originalTime; //reset the time
         } 
+        if(this.displayer==null){
+            clearInterval(this.interval);
+            console.log("clearing interval");
+        }
     }
-
 }
 
 /**
@@ -192,18 +203,19 @@ class Exercise {
         this.muscleGroup = muscleGroup;
         this.linkName = linkName;
         this.workoutTrack = workoutTrack;
-        this.exerciseID = "exercise-" + Exercise.serialID;
+        this.exerciseID = "" + Exercise.serialID;
         this.restTime = restTime;
         Exercise.serialID++;
+        
     }
     //renders numBoxes # of checkboxes to arg2
     renderCheckboxes = (numBoxes, container) => {
         let checkContainer = document.createElement("div");
         checkContainer.classList.add("checkbox-list");
-        let timer = new Timer(this.restTime);
+        let timer = new Timer(this.restTime,  "exercise-timer" + this.exerciseID);
         for (let i = 0; i < numBoxes; ++i) {
             let currentBox = document.createElement("input");
-            currentBox.type = "checkbox";
+            currentBox.type = "checkbox"; 
             currentBox.addEventListener("click", timer.start);
             checkContainer.appendChild(currentBox);
             
@@ -233,7 +245,8 @@ class Exercise {
         nameAndTimerContainer.appendChild(exerciseName);
         //timer
         let exerciseTimer = document.createElement("p");
-        exerciseTimer.id = "exercise-timer";
+        exerciseTimer.id = "exercise-timer" + exercise.id;
+        exerciseTimer.classList.add("exercise-timer");
         exerciseTimer.innerText = Math.floor(this.restTime / 60) + " : " + (this.restTime % 60);
         nameAndTimerContainer.appendChild(exerciseTimer);
 
