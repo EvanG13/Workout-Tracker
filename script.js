@@ -119,11 +119,12 @@ class Timer {
     }
 
     displayTime = () => {
+        this.displayer = document.getElementById(this.domId);
         this.isOver(); //handle if the timer reached zero.
         this.minutes = Math.floor(this.totalTime / 60);
         this.seconds = (this.totalTime % 60);
         
-        this.displayer = document.getElementById(this.domId);
+        
        
         if(this.displayer!= null){
         this.displayer.innerText = (this.minutes + ":" + this.seconds);
