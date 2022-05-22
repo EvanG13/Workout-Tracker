@@ -3,7 +3,7 @@ h1 {
     color: brown;
 }
 
-body{
+body {
     padding: 0 10px 0 10px;
     width: 100%;
     padding: 0;
@@ -19,7 +19,7 @@ header {
 }
 
 
-button{
+button {
     height: 100px;
     width: 100px;
     background-color: rgb(217, 69, 69);
@@ -27,20 +27,20 @@ button{
     border-radius: 10px;
 }
 
-.enlarge-button{
+.enlarge-button {
     display: inline;
     margin: 10px;
     height: 30px;
     width: 90px;
     border-radius: 10px;
 }
+
 button:hover{
     background-color: black;
     color: cadetblue;
 }
 
-
-button:active{
+button:active {
     background-color: azure;
     color: red;
 }
@@ -75,29 +75,27 @@ main {
     font-weight: bold;
 }
 
-#name-and-timer{
+#name-and-timer {
     display: flex;
     flex-direction:row;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.exercise-timer{
+.exercise-timer {
     height: 30px;
     width: 80px;
-    background-color: #4af626;
-    border: dotted 3px black;
+    background-color: white;
+    border: solid 3px black;
     color:black;
     text-align: center;
     letter-spacing: 3px;
     font-size: 20px;
 }
 
-#exercise-name{
-   
+#exercise-name {
     font-size:30px;
 }
-
 
 .exercise-row {
     height: max-content;
@@ -134,13 +132,13 @@ main {
     font-size: 25px;
 }
 
-footer{
+footer {
     height: 15%;
     color:brown;
     
 }
 
-footer ul{
+footer ul {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -148,7 +146,7 @@ footer ul{
     align-items: center;
 }
 
-ul li{
+ul li {
 
 }
 
@@ -157,7 +155,7 @@ footer *{
 }
 
 
-.workout-list-circuit{
+.workout-list-circuit {
     height: 220px;
     width: 100%;
     border: black dotted 3px;
@@ -169,16 +167,15 @@ footer *{
     justify-content: space-around;
 }
 
-.workout-list-circuit:hover{
+.workout-list-circuit:hover {
     cursor:pointer;
     background-color: tomato;
 }
 
 .workout-list-circuit p{
     font-size: 30px;
-
 }
 
-.enlarge-button{
+.enlarge-button {
     background-color: cornsilk ;
 }
