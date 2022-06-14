@@ -231,12 +231,12 @@ class Exercise {
     renderExercise = () => {
         let exerciseRows = document.getElementById("exercise-rows"); //the container that holds all exercises
 
-        //set up exercise row
+        // Set up exercise row
         let exercise = document.createElement("div");
         exercise.id = this.exerciseID; //assign static ID
         exercise.classList.add("exercise-row"); //each exercise has a class of exercise-row
 
-        // setup  exercise name and timer
+        // Setup  exercise name and timer
         let nameAndTimerContainer = document.createElement("div");
         nameAndTimerContainer.id = "name-and-timer";
         let exerciseName = document.createElement("p");
@@ -253,28 +253,29 @@ class Exercise {
 
         exercise.appendChild(nameAndTimerContainer);
 
-        // setup  exercise Link
+        // Setup  exercise Link
         let exerciseLink = document.createElement("a");
         exerciseLink.id = "exercise-link";
         exerciseLink.href = this.link;
         exerciseLink.innerText = this.linkName;
         exercise.appendChild(exerciseLink);
 
-        // setup muscle group
+        // Setup muscle group
         let muscleGroup = document.createElement("p");
         muscleGroup.id = "muscle-group";
         muscleGroup.innerText = this.muscleGroup;
         exercise.appendChild(muscleGroup);
 
-        // setup numSets
+        // Setup numSets
         let numSets = document.createElement("p");
         numSets.id="num-sets";
         numSets.innerText = "Number of Sets: " + this.numSets;
         exercise.appendChild(numSets);
-        //set up checkboxes
+        
+        // Set up checkboxes
         this.renderCheckboxes(parseInt(this.numSets, 10), exercise);
 
-        // setup enlarge button
+        // Setup enlarge button
         let enlarger = document.createElement("button");
         enlarger.value = exercise.id;
         enlarger.classList.add("enlarge-button");
@@ -282,19 +283,19 @@ class Exercise {
         enlarger.innerText = "Enlarge";
         exercise.appendChild(enlarger);
 
-        // setup numReps
+        // Setup numReps
         let numReps = document.createElement("p");
         numReps.id="num-reps";
         numReps.innerText = this.numReps;
         exercise.appendChild(numReps);
 
-        //setup exercise track
+        // Setup exercise track
         let track = document.createElement("audio");
         track.controls = "controls";
         track.src = this.workoutTrack; 
         exercise.appendChild(track);
 
-        // append the exercise to the exercise container
+        // Append the exercise to the exercise container
         exerciseRows.appendChild(exercise); 
     }
 }
@@ -304,39 +305,39 @@ class Exercise {
  */
 class CircuitCalendar {
 
-    //takes ExerciseCircuit object array and renders the circuits to the workout-list element
+    // Takes ExerciseCircuit object array and renders the circuits to the workout-list element
     constructor(circuitArray) {
         this.circuitList = circuitArray;
 
-        //render all workouts to the workout list
+        // Render all workouts to the workout list
         let workoutList = document.getElementById('workout-list');
             for (let i = 0; i < this.circuitList.length; ++i) {
-                // create container div
+                // Create container div
                 let circuitContainer = document.createElement('div');
                 circuitContainer.setAttribute("value", i); // this is index of the corresponding circuit object in this.circuitList
                 circuitContainer.classList.add("workout-list-circuit");
 
-                // for circuit title
+                // For circuit title
                 let circuitTitle = document.createElement("p");
                 circuitTitle.classList.add("workout-list-circuit-title");
                 circuitTitle.innerText = this.circuitList[i].circuitTitle;
 
-                // create date
+                // Create date
                 let circuitDate = document.createElement("p");
                 circuitTitle.classList.add("workout-list-circuit-date");
                 circuitDate.innerText = this.circuitList[i].date;
 
-                //add click event handler to container
+                // Add click event handler to container
                 circuitContainer.addEventListener("click", this.switchToCurrent);
 
-                //add elements to container and then push container onto the DOM
+                // Add elements to container and then push container onto the DOM
                 circuitContainer.appendChild(circuitTitle);
                 circuitContainer.appendChild(circuitDate);
                 workoutList.appendChild(circuitContainer);
             }
         }
 
-        //event handler. When a circuit in the calendar is clicked, it renders the exercise rows to the current workout window.
+        // Event handler. When a circuit in the calendar is clicked, it renders the exercise rows to the current workout window.
         switchToCurrent = ({target}) => {
         clearWorkout();
         if (this.circuitList[target.getAttribute("value")]) {
