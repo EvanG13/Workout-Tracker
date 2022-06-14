@@ -18,7 +18,6 @@ header {
     margin-bottom: 10px;
 }
 
-
 button {
     height: 100px;
     width: 100px;
@@ -146,14 +145,9 @@ footer ul {
     align-items: center;
 }
 
-ul li {
-
-}
-
 footer *{
     color: brown;
 }
-
 
 .workout-list-circuit {
     height: 220px;
