@@ -1,5 +1,5 @@
-//script for index.html
-// declares exercise class and Exercise circuit class. call the ExerciseCircuit constructor to render the day's exercise
+// Script for index.html
+// Declares exercise class and Exercise circuit class. call the ExerciseCircuit constructor to render the day's exercise
 
 const createButton = document.getElementById("create-workout");
 const addButton = document.getElementById("add-exercise");
@@ -40,7 +40,7 @@ addButton.addEventListener("click", addExercise);
  * @returns current date
  */
 
-//utilities
+// Utilities
 
 /**
  * Enlarges the exercise box
@@ -71,7 +71,6 @@ let minify = ({target}) => {
     target.removeEventListener("click", minify);
     target.addEventListener("click", enlarge);
 }
-
 
 /**
  * Gets the current date in format mm/dd/yyyy
@@ -110,14 +109,14 @@ class RestTimer {
     seconds = 0;
     minutes = 0;
     interval;
-    constructor(restTime, domId) { //dom id is the id of the p tag that displays the time 
+    constructor(restTime, domId) { // Dom id is the id of the p tag that displays the time 
         this.totalTime = restTime;
         this.originalTime = restTime;
         this.domId = domId;
     }
 
     start = () => {
-        this.totalTime = this.originalTime; //reset the time
+        this.totalTime = this.originalTime; // Reset the time
         if(!this.interval){
         this.interval = setInterval(this.displayTime, 1000);
         }
@@ -126,7 +125,7 @@ class RestTimer {
 
     displayTime = () => {
         this.displayer = document.getElementById(this.domId);
-        this.isOver(); //handle if the timer reached zero.
+        this.isOver(); // Handle if the timer reached zero.
         this.minutes = Math.floor(this.totalTime / 60);
         this.seconds = (this.totalTime % 60);
         
@@ -162,7 +161,7 @@ class ExerciseCircuit {
         document.getElementById("circuit-title").innerText = this.circuitTitle;
     }
 
-     //render all exercises
+     // Render all exercises
      renderAllExercises = () => {
         for (let ex of this.exerciseList) {
             if (ex) { 
@@ -192,8 +191,7 @@ class ExerciseCircuit {
 }
 
 /**
- * one exercise that will be rendered as a row inside the ExerciseCircuit
- * 
+ * Ene exercise that will be rendered as a row inside the ExerciseCircuit
  */
 class Exercise {
     static serialID = 0;
@@ -208,9 +206,9 @@ class Exercise {
         this.exerciseID = "" + Exercise.serialID;
         this.restTime = restTime;
         Exercise.serialID++;
-        
     }
-    //renders numBoxes # of checkboxes to arg2
+
+    // Renders numBoxes # of checkboxes to arg2
     renderCheckboxes = (numBoxes, container) => {
         let checkContainer = document.createElement("div");
         checkContainer.classList.add("checkbox-list");
@@ -226,7 +224,7 @@ class Exercise {
     }
 
     /**
-     * render exercise that the user creates
+     * Render exercise that the user creates
      */
     renderExercise = () => {
         let exerciseRows = document.getElementById("exercise-rows"); //the container that holds all exercises
